@@ -35,3 +35,13 @@ exports.postOrder = (req, res, next) => {
         next(err);
     });
 }
+
+exports.getTimeStamps = (req, res, next) => {
+    TimeStamp.fetchTimeStamps().then((stamps) => {
+        res.status(200).json({
+            stamps
+        });
+    }).catch((err) => {
+        console.log(err);
+    });
+}
