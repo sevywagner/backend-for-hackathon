@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator')
 const Order = require('../models/Order');
+const TimeStamp = require('../models/TimeStamp');
 
 exports.postOrder = (req, res, next) => {
     const name = req.body.name;
@@ -19,7 +20,11 @@ exports.postOrder = (req, res, next) => {
     }
 
     const order = new Order(name, address, email, date, time, bloodAmount, payout);
+    const timeStamp = new TimeStamp(date, time);
+
     order.save().then(() => {
+        return timeStamp.save();
+    }).then(() => {
         res.status(201).json({
             message: 'Successfully placed order'
         });
