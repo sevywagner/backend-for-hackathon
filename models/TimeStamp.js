@@ -1,4 +1,4 @@
-const { getDb } = require('../util/database')
+const { getDb } = require('./../util/database')
 
 class TimeStamp {
     constructor(date, time) {

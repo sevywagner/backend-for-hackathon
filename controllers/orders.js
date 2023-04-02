@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator')
 const Order = require('../models/Order');
 const TimeStamp = require('../models/TimeStamp');
+const Donation = require('../models/Donation');
 
 exports.postOrder = (req, res, next) => {
     const name = req.body.name;
@@ -28,6 +29,23 @@ exports.postOrder = (req, res, next) => {
         res.status(201).json({
             message: 'Successfully placed order'
         });
+    }).catch((err) => {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+}
+
+exports.putDonation = (req, res, next) => {
+    const email = 'sevywagner@gmail.com';
+    const amount = req.body.amount;
+
+    const donation = new Donation(email, amount);
+    donation.save().then(() => {
+        res.status(201).json({
+            message: 'Created a donation'
+        })
     }).catch((err) => {
         if (!err.statusCode) {
             err.statusCode = 500;

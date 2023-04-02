@@ -10,6 +10,8 @@ router.post('/orders', [
     body('amount').notEmpty().withMessage('Please choose an amount to donate')
 ], orderController.postOrder);
 
+router.put('/donation', orderController.putDonation);
+
 router.get('/time-stamps', orderController.getTimeStamps);
 
 module.exports = router;
